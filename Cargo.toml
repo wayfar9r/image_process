@@ -1,0 +1,7 @@
+[workspace]
+resolver = "3"
+members = ["blur_plugin","image_processor", "mirror_plugin"]
+
+[workspace.dependencies]
+image = {version = "0.25", features = ["png"]}
+serde_json = "1.0"
