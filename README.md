@@ -15,4 +15,7 @@ with a mirror function
 
 # use
 
+cargo build -p blur_plugin
+cargo build -p mirror_plugin
+
 Run and examples -> image_processor/README.md
