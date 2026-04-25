@@ -15,7 +15,6 @@ with a mirror function
 
 # use
 
-cargo build -p blur_plugin
-cargo build -p mirror_plugin
+cargo build --workspace
 
 Run and examples -> image_processor/README.md
