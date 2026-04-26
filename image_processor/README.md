@@ -8,7 +8,9 @@ RUST_LOG=info cargo run -- --input ../img/snow_leopard1.png --output output.png 
 
 ### Windows
 
-$env:RUST_LOG="info"; cargo run -- --input img\snow_leopard1.png --output output.png --plugin blur_plugin -- params .\image_processor\params_blur.txt --plugin-path .\target\debug
+_Powershell_
+
+$env:RUST_LOG="info"; cargo run -- --input .\img\snow_leopard1.png --output output.png --plugin blur_plugin -- params .\image_processor\params_blur.txt --plugin-path .\target\debug
 
 ## RUN mirror effect#
 
@@ -18,4 +20,6 @@ RUST_LOG=info cargo run -- --input ../img/snow_leopard1.png --output output.png 
 
 ### Windows
 
-$env:RUST_LOG="info"; cargo run -- --input img\snow_leopard1.png --output output.png --plugin mirror_plugin -- params .\image_processor\params_mirror.txt --plugin-path .\target\debug
+_Powershell_
+
+$env:RUST_LOG="info"; cargo run -- --input .\img\snow_leopard1.png --output output.png --plugin mirror_plugin -- params .\image_processor\params_mirror.txt --plugin-path .\target\debug
