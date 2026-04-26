@@ -12,7 +12,7 @@ use image::ImageReader;
 
 use log::{error, info};
 
-use image_processor::PluginLoader;
+use image_processor::{PluginLoader, make_plugin_path};
 
 #[derive(Debug, Parser)]
 struct ImageArgs {
@@ -38,11 +38,7 @@ fn main() -> Result<(), anyhow::Error> {
             return Err(anyhow!("failed to open image: {}. {e}", img_path));
         }
     };
-    let plugin_path = {
-        let mut path = PathBuf::from(&args.plugin_path).join(&args.plugin);
-        path.set_extension("so");
-        path
-    };
+    let plugin_path = make_plugin_path(args.plugin_path, &args.plugin)?;
     info!(
         "trying to open lib with path: {}",
         plugin_path.to_string_lossy()

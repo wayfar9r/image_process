@@ -1,6 +1,6 @@
+use core::slice;
 use std::{
     ffi::{CStr, c_char, c_uchar, c_uint},
-    mem::ManuallyDrop,
     os::raw::c_int,
 };
 
@@ -22,6 +22,7 @@ unsafe extern "C" fn process_image(
     }
     if params.is_null() {
         eprintln!("params is null pointer");
+        return -1;
     }
     let cparams = unsafe { CStr::from_ptr(params) };
     let json_str = match cparams.to_str() {
@@ -59,10 +60,10 @@ unsafe extern "C" fn process_image(
         None => false,
     };
     let buf_size = (width * height * 4) as usize;
-    let image_slice = unsafe { Vec::from_raw_parts(rgb_data, buf_size, buf_size) };
+    let image_slice = unsafe { slice::from_raw_parts_mut(rgb_data, buf_size) };
 
-    let mut image = match RgbaImage::from_vec(width, height, image_slice) {
-        Some(img) => ManuallyDrop::new(DynamicImage::ImageRgba8(img)),
+    let mut image = match RgbaImage::from_raw(width, height, image_slice.to_vec()) {
+        Some(img) => DynamicImage::ImageRgba8(img),
         None => {
             eprintln!("failed create rgba image from raw vec");
             return -1;
@@ -75,6 +76,7 @@ unsafe extern "C" fn process_image(
     if vertical_flip {
         image.apply_orientation(image::metadata::Orientation::FlipVertical);
     }
+    image_slice.copy_from_slice(image.as_bytes());
     0
 }
 
